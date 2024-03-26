@@ -1,0 +1,25 @@
+.car-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-block {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    width: 70%;
+    min-width: 415px;
+}
+
+.textfield {
+    border: 2px solid #6CB4EE;
+    border-radius: 5px;
+    color: #0a147e;
+    outline: none;
+}
+
+.textfield:focus,
+.textfield:active {
+    border-color: #0a147e;
+}

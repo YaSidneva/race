@@ -1,0 +1,31 @@
+.main-container {
+    width: 100%;
+    height: 100vh;
+}
+
+.update-container {
+    min-width: fit-content;
+    width: 70%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header-btn-block {
+    display: flex;
+    min-width: 415px;
+    width: 70%;
+    max-width: 500px;
+    justify-content: space-between;
+}
+
+.car-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: 415px;
+    width: 70%;
+    max-width: 500px;
+    height: 100px;
+}
