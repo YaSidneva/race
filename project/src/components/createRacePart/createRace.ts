@@ -1,4 +1,6 @@
 import { createRoad } from "./createRoad";
+import { createButton } from "../createButtons/createBtn";
+import { createRaceItem } from "../createRacePart/createRaceItem";
 
 export function createRace(): HTMLElement {
     const racePart = document.createElement('div');
@@ -8,6 +10,6 @@ export function createRace(): HTMLElement {
     const page = document.createElement('div');
     page.textContent = `page `;
     racePart.appendChild(page);
-    const road = racePart.appendChild(createRoad());
+    racePart.appendChild(createRaceItem());
     return racePart;
 }
