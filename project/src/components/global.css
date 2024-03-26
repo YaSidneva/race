@@ -20,6 +20,12 @@
     justify-content: space-between;
 }
 
+.race {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+}
+
 .car-container {
     display: flex;
     flex-direction: column;

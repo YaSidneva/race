@@ -1,6 +1,7 @@
 import { createAddCar } from "../createAddPart/createAddCar";
 import { createButton } from "../createButtons/createBtn";
 import { createBtnContainer } from "../createAddPart/createBtnPart";
+import { createRace } from "../createRacePart/createRace";
 import "../../components/global.css";
 
 class App {
@@ -26,6 +27,8 @@ class App {
         const addCar = addCarBlock.appendChild(createAddCar('Create car'));
         const updCar = addCarBlock.appendChild(createAddCar('Update car'));
         const btnBlock = editSaveContainer.appendChild(createBtnContainer());
+        const race = mainContainer.appendChild(createRace());
+        race.classList.add('race');
     }
 }
 
