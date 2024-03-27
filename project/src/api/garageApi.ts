@@ -1,4 +1,4 @@
-import { Car, EndpointConfiguration, ICallback, OptionsType } from "../../types";
+import { Car, EndpointConfiguration, ICallback, OptionsType } from "../types";
 
 class GarageApi {
     private baseLink: string;

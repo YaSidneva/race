@@ -9,6 +9,7 @@ export function manageCar(btnText: string, btnAction: ICallback<Car>): HTMLEleme
     textField.type = 'text';
     textField.classList.add('textfield');
     const colorPicker = document.createElement('input');
+    colorPicker.classList.add('color-picker');
     colorPicker.type = 'color';
     colorPicker.value = '#6CB4EE';
     const btnCreate = createButton(btnText, e => {

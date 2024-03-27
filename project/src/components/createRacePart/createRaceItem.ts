@@ -10,8 +10,10 @@ export function createRaceItem(car: Car): HTMLElement {
     newItem.appendChild(carHeaderBtn);
     carHeaderBtn.classList.add('car-header');
     carHeaderBtn.appendChild(createButton('select', e => {
-        // const updTextfield = document.querySelector('upd-container').querySelector('button');
-        // updTextfield.value = 
+        const updTextfield = document.querySelector('.upd-container').querySelector('.textfield') as HTMLInputElement;
+        updTextfield.value = car.name;
+        const updColorPicker = document.querySelector('.upd-container').querySelector('.color-picker') as HTMLInputElement;
+        updColorPicker.value = car.color;
     })).classList.add('car-header-btn');
     carHeaderBtn.appendChild(createButton('remove')).classList.add('car-header-btn');
     const titleCar = document.createElement('div');
