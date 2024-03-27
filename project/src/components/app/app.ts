@@ -39,8 +39,10 @@ class App {
         }));
         updCar.classList.add('upd-container');
         const btnBlock = editSaveContainer.appendChild(createBtnContainer());
-        const race = mainContainer.appendChild(createRace());
-        race.classList.add('race');
+        this.garageApi.getCars(0, 7, c => {
+            console.log(c);
+            const race = mainContainer.appendChild(createRace(c));
+        });
     }
 }
 

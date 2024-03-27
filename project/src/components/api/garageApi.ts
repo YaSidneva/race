@@ -13,6 +13,10 @@ class GarageApi {
         this.request('POST', 'garage', callback, undefined, car);
     }
 
+    getCars(page: number, limit: number, callback: ICallback<Array<Car>>) {
+        this.request('GET', 'garage', callback, { "_page": page, "_limit": limit }, undefined);
+    }
+
     errorHandler(res: Response) {
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)
