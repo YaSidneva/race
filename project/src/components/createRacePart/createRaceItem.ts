@@ -8,7 +8,10 @@ export function createRaceItem(): HTMLElement {
     const carHeaderBtn = document.createElement('div');
     newItem.appendChild(carHeaderBtn);
     carHeaderBtn.classList.add('car-header');
-    carHeaderBtn.appendChild(createButton('select')).classList.add('car-header-btn');
+    carHeaderBtn.appendChild(createButton('select', e => {
+        // const updTextfield = document.querySelector('upd-container').querySelector('button');
+        // updTextfield.value = 
+    })).classList.add('car-header-btn');
     carHeaderBtn.appendChild(createButton('remove')).classList.add('car-header-btn');
     const titleCar = document.createElement('div');
     titleCar.textContent = 'name';

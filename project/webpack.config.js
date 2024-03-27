@@ -3,7 +3,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const isProduction = process.env.NODE_ENV == 'production';
 
 
@@ -21,6 +21,7 @@ const config = {
         host: 'localhost',
     },
     plugins: [
+        new DotenvWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: 'index.html',
             favicon: './src/components/img/favicon.png',

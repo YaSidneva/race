@@ -1,7 +1,8 @@
 import { createButton } from "../createButtons/createBtn";
+import { Car, ICallback } from "../../types"
 import "./style.css"
 
-export function createAddCar(btnText: string): HTMLElement {
+export function manageCar(btnText: string, btnAction: ICallback<Car>): HTMLElement {
     const createField = document.createElement('div');
     createField.classList.add('car-block');
     const textField = document.createElement('input');
@@ -10,7 +11,15 @@ export function createAddCar(btnText: string): HTMLElement {
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
     colorPicker.value = '#6CB4EE';
-    const btnCreate = createButton(btnText);
+    const btnCreate = createButton(btnText, e => {
+        const newCar: Car = {
+            name: textField.value,
+            color: colorPicker.value
+        }
+        btnAction(newCar);
+        textField.value = '';
+        colorPicker.value = '#6CB4EE';
+    });
     createField.appendChild(textField);
     createField.appendChild(colorPicker);
     createField.appendChild(btnCreate);
