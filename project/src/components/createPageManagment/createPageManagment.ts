@@ -6,15 +6,17 @@ class PageManagment {
     private garage: Garage;
     private page: number;
     private limit: number;
+    private pageManagmentContainer: HTMLElement;
 
-    constructor() {
-        this.garage = new Garage();
+    constructor(pageManagmentContainer: HTMLElement) {
+        this.garage = new Garage(this);
         this.page = 1;
         this.limit = 7;
+        this.pageManagmentContainer = pageManagmentContainer;
     }
 
-    renderPageContainer(pageManagmentContainer: HTMLElement): HTMLElement {
-        pageManagmentContainer.innerHTML = '';
+    renderPageContainer() {
+        this.pageManagmentContainer.innerHTML = '';
         const raceContainer = document.createElement('div');
         raceContainer.classList.add('race-container');
         const hearedRace = document.createElement('div');
@@ -22,14 +24,14 @@ class PageManagment {
         const page = document.createElement('div');
         page.textContent = `page ${this.page}`;
         hearedRace.appendChild(page);
-        pageManagmentContainer.appendChild(hearedRace);
-        pageManagmentContainer.appendChild(raceContainer);
+        this.pageManagmentContainer.appendChild(hearedRace);
+        this.pageManagmentContainer.appendChild(raceContainer);
         this.garage.renderGarage(this.page, this.limit, raceContainer);
 
-        pageManagmentContainer.classList.add('page-manager-container');
+        this.pageManagmentContainer.classList.add('page-manager-container');
         const pageManagerBlock = document.createElement('div');
         pageManagerBlock.classList.add('page-manager-block');
-        pageManagmentContainer.appendChild(pageManagerBlock);
+        this.pageManagmentContainer.appendChild(pageManagerBlock);
         pageManagerBlock.appendChild(createButton('prev', e => {
             this.page -= 1;
             page.textContent = `page ${this.page}`;
@@ -44,7 +46,6 @@ class PageManagment {
             this.garage.renderGarage(this.page, this.limit, raceContainer);
         })).className = 'page-btn prev-page-btn';
 
-        return pageManagmentContainer;
     }
 }
 

@@ -14,7 +14,6 @@ class App {
 
     constructor() {
         this.garageApi = new GarageApi(process.env.API_URL!, {});
-        this.pageManager = new PageManagment();
     }
 
     start() {
@@ -33,7 +32,7 @@ class App {
         const toGarageButton = headerBtn.appendChild(btnElGarage);
         const toWinnerButton = headerBtn.appendChild(btnElWinner);
         const pageManagmentContainer = document.createElement('div');
-
+        this.pageManager = new PageManagment(pageManagmentContainer);
         const addCarBlock = document.createElement('div');
         addCarBlock.classList.add('car-container');
         editSaveContainer.appendChild(addCarBlock);
@@ -44,7 +43,7 @@ class App {
             this.garageApi.createCar(newCar,
                 c => {
                     console.log(c);
-                    this.pageManager.renderPageContainer(pageManagmentContainer);
+                    this.pageManager.renderPageContainer();
                 })
         }));
         const updCar = addCarBlock.appendChild(manageCar('Update car', e => {
@@ -53,7 +52,7 @@ class App {
         const btnBlock = editSaveContainer.appendChild(createBtnContainer());
 
         mainContainer.appendChild(pageManagmentContainer);
-        this.pageManager.renderPageContainer(pageManagmentContainer);
+        this.pageManager.renderPageContainer();
     }
 }
 

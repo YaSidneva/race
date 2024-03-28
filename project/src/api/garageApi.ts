@@ -17,6 +17,10 @@ class GarageApi {
         this.request('GET', 'garage', callback, { "_page": page, "_limit": limit }, undefined);
     }
 
+    removeCar(id: number, callback: ICallback<Array<Car>>) {
+        this.request('DELETE', `garage/${id}`, callback, {}, undefined);
+    }
+
     errorHandler(res: Response) {
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)

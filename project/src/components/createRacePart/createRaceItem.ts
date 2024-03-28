@@ -1,9 +1,9 @@
-import { Car } from "../../types";
+import { Car, ICallback } from "../../types";
 import { createButton } from "../createButtons/createBtn";
 import { createRoad } from "../createRacePart/createRoad";
 import "./style.css";
 
-export function createRaceItem(car: Car): HTMLElement {
+export function createRaceItem(car: Car, onRemove: ICallback<number>): HTMLElement {
     const newItem = document.createElement('div');
     newItem.classList.add('item-car');
     const carHeaderBtn = document.createElement('div');
@@ -15,7 +15,10 @@ export function createRaceItem(car: Car): HTMLElement {
         const updColorPicker = document.querySelector('.upd-container').querySelector('.color-picker') as HTMLInputElement;
         updColorPicker.value = car.color;
     })).classList.add('car-header-btn');
-    carHeaderBtn.appendChild(createButton('remove')).classList.add('car-header-btn');
+    carHeaderBtn.appendChild(createButton('remove', e => {
+        onRemove(car.id);
+    })).classList.add('car-header-btn');
+
     const titleCar = document.createElement('div');
     titleCar.textContent = car.name;
     titleCar.classList.add('title-car');
