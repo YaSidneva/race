@@ -18,6 +18,7 @@ export function createRaceItem(car: Car): HTMLElement {
     carHeaderBtn.appendChild(createButton('remove')).classList.add('car-header-btn');
     const titleCar = document.createElement('div');
     titleCar.textContent = car.name;
+    titleCar.classList.add('title-car');
     carHeaderBtn.appendChild(titleCar);
     const road = newItem.appendChild(createRoad(car.color));
     return newItem;

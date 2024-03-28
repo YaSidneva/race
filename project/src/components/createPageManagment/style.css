@@ -1,0 +1,13 @@
+.page-manager-container {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+    max-width: 200px;
+    min-width: 160px;
+    width: 100%;
+}
+
+.page-btn {
+    width: 6em;
+    height: 2em;
+}

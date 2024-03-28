@@ -18,7 +18,8 @@
 }
 
 .car-header {
-    width: 200px;
+    max-width: 250px;
+    min-width: 210px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,6 +28,11 @@
 .car-header-btn {
     width: 5em;
     height: 2em;
+}
+
+.title-car {
+    color: #0a147e;
+    font-weight: bold;
 }
 
 .car {

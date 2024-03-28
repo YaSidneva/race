@@ -2,8 +2,10 @@ import { manageCar } from "../createAddPart/createAddCar";
 import { createButton } from "../createButtons/createBtn";
 import { createBtnContainer } from "../createAddPart/createBtnPart";
 import { createRace } from "../createRacePart/createRace";
+import { createPageManagmentContainer } from "../createPageManagment/createPageManagment"
 import GarageApi from "../../api/garageApi";
 import "../../components/global.css";
+
 
 class App {
     private garageApi: GarageApi;
@@ -54,6 +56,8 @@ class App {
             console.log(c);
             const race = raceContainer.appendChild(createRace(c));
         });
+
+        mainContainer.appendChild(createPageManagmentContainer());
     }
 }
 
