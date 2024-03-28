@@ -2,19 +2,19 @@ import { manageCar } from "../createAddPart/createAddCar";
 import { createButton } from "../createButtons/createBtn";
 import { createBtnContainer } from "../createAddPart/createBtnPart";
 import { createRace } from "../createRacePart/createRace";
-import { createPageManagmentContainer } from "../createPageManagment/createPageManagment"
 import GarageApi from "../../api/garageApi";
 import Garage from "../garage/garage";
+import PageManagment from "../createPageManagment/createPageManagment";
 import "../../components/global.css";
 
 
 class App {
     private garageApi: GarageApi;
-    private garage: Garage;
+    private pageManager: PageManagment;
 
     constructor() {
         this.garageApi = new GarageApi(process.env.API_URL!, {});
-        this.garage = new Garage();
+        this.pageManager = new PageManagment();
     }
 
     start() {
@@ -32,11 +32,11 @@ class App {
         const btnElWinner = createButton('To winners');
         const toGarageButton = headerBtn.appendChild(btnElGarage);
         const toWinnerButton = headerBtn.appendChild(btnElWinner);
+        const pageManagmentContainer = document.createElement('div');
+
         const addCarBlock = document.createElement('div');
         addCarBlock.classList.add('car-container');
         editSaveContainer.appendChild(addCarBlock);
-        const raceContainer = document.createElement('div');
-        raceContainer.classList.add('race-container');
         let page = 0;
         let limit = 7;
         const addCar = addCarBlock.appendChild(manageCar('Create car', newCar => {
@@ -44,7 +44,7 @@ class App {
             this.garageApi.createCar(newCar,
                 c => {
                     console.log(c);
-                    this.garage.renderGarage(page, limit, raceContainer);
+                    this.pageManager.renderPageContainer(pageManagmentContainer);
                 })
         }));
         const updCar = addCarBlock.appendChild(manageCar('Update car', e => {
@@ -52,10 +52,8 @@ class App {
         updCar.classList.add('upd-container');
         const btnBlock = editSaveContainer.appendChild(createBtnContainer());
 
-        mainContainer.appendChild(raceContainer);
-        this.garage.renderGarage(page, limit, raceContainer);
-
-        mainContainer.appendChild(createPageManagmentContainer());
+        mainContainer.appendChild(pageManagmentContainer);
+        this.pageManager.renderPageContainer(pageManagmentContainer);
     }
 }
 

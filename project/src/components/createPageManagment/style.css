@@ -1,8 +1,9 @@
 .page-manager-container {
     display: flex;
+    flex-direction: column;
     margin-top: 15px;
     justify-content: space-between;
-    max-width: 200px;
+    max-width: 100%;
     min-width: 160px;
     width: 100%;
 }
@@ -10,4 +11,13 @@
 .page-btn {
     width: 6em;
     height: 2em;
+}
+
+.page-manager-block {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    min-width: 160px;
+    max-width: 220px;
+    width: 100%;
 }
