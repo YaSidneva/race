@@ -32,19 +32,33 @@ class PageManagment {
         const pageManagerBlock = document.createElement('div');
         pageManagerBlock.classList.add('page-manager-block');
         this.pageManagmentContainer.appendChild(pageManagerBlock);
-        pageManagerBlock.appendChild(createButton('prev', e => {
+        const prevBtn = pageManagerBlock.appendChild(createButton('prev', e => {
             this.page -= 1;
             page.textContent = `page ${this.page}`;
             // TODO: mute prev button if we are on the first page
-            this.garage.renderGarage(this.page, this.limit, raceContainer);
-        })).className = 'page-btn next-page-btn';
+            if (this.page === 1) {
+                prevBtn.disabled = true;
 
-        pageManagerBlock.appendChild(createButton('next', e => {
+            };
+            this.garage.renderGarage(this.page, this.limit, raceContainer);
+        })) as HTMLButtonElement;
+        if (this.page === 1) {
+            prevBtn.disabled = true;
+
+        };
+        prevBtn.className = 'page-btn next-page-btn';
+
+        const nextBtn = pageManagerBlock.appendChild(createButton('next', e => {
             this.page += 1;
             page.textContent = `page ${this.page}`;
             // TODO: mute next button if we are on the last page
+            if (this.page != 1) {
+                prevBtn.disabled = false;
+
+            };
             this.garage.renderGarage(this.page, this.limit, raceContainer);
-        })).className = 'page-btn prev-page-btn';
+        })) as HTMLButtonElement;
+        nextBtn.className = 'page-btn prev-page-btn';
 
     }
 }

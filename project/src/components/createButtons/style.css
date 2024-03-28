@@ -28,3 +28,12 @@ button:hover {
     cursor: pointer;
     border-color: #01085a;
 }
+
+button:disabled {
+    top: 0;
+    left: 0;
+    box-shadow: none;
+    cursor: not-allowed;
+    border-color: #6CB4EE;
+    opacity: 0.4;
+}
