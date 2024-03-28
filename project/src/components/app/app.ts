@@ -4,14 +4,17 @@ import { createBtnContainer } from "../createAddPart/createBtnPart";
 import { createRace } from "../createRacePart/createRace";
 import { createPageManagmentContainer } from "../createPageManagment/createPageManagment"
 import GarageApi from "../../api/garageApi";
+import Garage from "../garage/garage";
 import "../../components/global.css";
 
 
 class App {
     private garageApi: GarageApi;
+    private garage: Garage;
 
     constructor() {
         this.garageApi = new GarageApi(process.env.API_URL!, {});
+        this.garage = new Garage();
     }
 
     start() {
@@ -34,16 +37,14 @@ class App {
         editSaveContainer.appendChild(addCarBlock);
         const raceContainer = document.createElement('div');
         raceContainer.classList.add('race-container');
+        let page = 0;
+        let limit = 7;
         const addCar = addCarBlock.appendChild(manageCar('Create car', newCar => {
             console.log(newCar);
             this.garageApi.createCar(newCar,
                 c => {
                     console.log(c);
-                    raceContainer.innerHTML = '';
-                    this.garageApi.getCars(0, 7, c => {
-                        console.log(c);
-                        const race = raceContainer.appendChild(createRace(c));
-                    });
+                    this.garage.renderGarage(page, limit, raceContainer);
                 })
         }));
         const updCar = addCarBlock.appendChild(manageCar('Update car', e => {
@@ -52,10 +53,7 @@ class App {
         const btnBlock = editSaveContainer.appendChild(createBtnContainer());
 
         mainContainer.appendChild(raceContainer);
-        this.garageApi.getCars(0, 7, c => {
-            console.log(c);
-            const race = raceContainer.appendChild(createRace(c));
-        });
+        this.garage.renderGarage(page, limit, raceContainer);
 
         mainContainer.appendChild(createPageManagmentContainer());
     }
