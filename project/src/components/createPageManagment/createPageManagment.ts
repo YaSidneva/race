@@ -35,7 +35,6 @@ class PageManagment {
         const prevBtn = pageManagerBlock.appendChild(createButton('prev', e => {
             this.page -= 1;
             page.textContent = `page ${this.page}`;
-            // TODO: mute prev button if we are on the first page
             if (this.page === 1) {
                 prevBtn.disabled = true;
 

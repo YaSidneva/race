@@ -15,3 +15,10 @@ export type EndpointConfiguration = {
 
 export type ICallback<T> = (data?: T) => void;
 
+export type GetWinners = {
+    page: number,
+    limit: number,
+    sort: ['id' | 'wins' | 'time'],
+    order: ['ASC' | 'DESC'];
+}
+
