@@ -1,10 +1,9 @@
 import { manageCar } from "../createAddPart/createAddCar";
 import { createButton } from "../createButtons/createBtn";
 import { createBtnContainer } from "../createAddPart/createBtnPart";
-import { createRace } from "../createRacePart/createRace";
 import GarageApi from "../../api/garageApi";
-import Garage from "../garage/garage";
 import PageManagment from "../createPageManagment/createPageManagment";
+import { winners } from "../winners/winners"
 import "../../components/global.css";
 
 
@@ -53,6 +52,7 @@ class App {
 
         mainContainer.appendChild(pageManagmentContainer);
         this.pageManager.renderPageContainer();
+        mainContainer.appendChild(winners());
     }
 }
 

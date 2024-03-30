@@ -1,6 +1,6 @@
-import { Car, EndpointConfiguration, ICallback, OptionsType } from "../types";
+import { Car, EndpointConfiguration, GetWinnersOptions, Winner, ICallback, OptionsType } from "../types";
 
-class GarageApi {
+class WinnersApi {
     private baseLink: string;
     private options: OptionsType;
 
@@ -9,20 +9,8 @@ class GarageApi {
         this.options = options;
     }
 
-    createCar(car: Car, callback: ICallback<Car>) {
-        this.request('POST', 'garage', callback, undefined, car);
-    }
-
-    getCars(page: number, limit: number, callback: ICallback<Array<Car>>) {
-        this.request('GET', 'garage', callback, { "_page": page, "_limit": limit }, undefined);
-    }
-
-    getCar(id: number, callback: ICallback<Car>) {
-        this.request('GET', `garage/${id}`, callback, {}, undefined);
-    }
-
-    removeCar(id: number, callback: ICallback<Array<Car>>) {
-        this.request('DELETE', `garage/${id}`, callback, {}, undefined);
+    getWinners(options: GetWinnersOptions, callback: ICallback<Array<Winner>>) {
+        this.request('GET', 'winners', callback, { "_page": options.page, "_limit": options.limit, "_sort": options.sort, "_order": options.order }, undefined);
     }
 
     errorHandler(res: Response) {
@@ -47,7 +35,7 @@ class GarageApi {
     }
 
     request(method: string, endpoint: string, callback: ICallback<any>,
-        options = {}, body: Car) {
+        options = {}, body?: Winner) {
         fetch(this.makeUrl(options, endpoint), {
             method: method,
             body: JSON.stringify(body),
@@ -62,4 +50,4 @@ class GarageApi {
     }
 }
 
-export default GarageApi;
+export default WinnersApi;
