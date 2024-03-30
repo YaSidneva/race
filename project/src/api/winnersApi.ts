@@ -1,4 +1,4 @@
-import { Car, EndpointConfiguration, GetWinnersOptions, Winner, ICallback, OptionsType } from "../types";
+import { Car, EndpointConfiguration, GetWinnersOptions, Winner, ICallback, OptionsType, TableResponse } from "../types";
 
 class WinnersApi {
     private baseLink: string;
@@ -9,8 +9,8 @@ class WinnersApi {
         this.options = options;
     }
 
-    getWinners(options: GetWinnersOptions, callback: ICallback<Array<Winner>>) {
-        this.request('GET', 'winners', callback, { "_page": options.page, "_limit": options.limit, "_sort": options.sort, "_order": options.order }, undefined);
+    getWinners(options: GetWinnersOptions, callback: ICallback<TableResponse<Winner>>) {
+        this.requestTable('GET', 'winners', callback, { "_page": options.page, "_limit": options.limit, "_sort": options.sort, "_order": options.order });
     }
 
     errorHandler(res: Response) {
@@ -44,8 +44,35 @@ class WinnersApi {
             }
         })
             .then(this.errorHandler)
+            .then((res) => {
+                const headerValue = res.headers.get("X-Total-Count");
+                console.log('Значение заголовка:', headerValue);
+                return res;
+            })
             .then((res) => res.json())
             .then((data) => callback(data))
+            .catch((err) => console.error(err));
+    }
+
+    requestTable(method: string, endpoint: string, callback: ICallback<TableResponse<Winner>>,
+        options = {},) {
+        fetch(this.makeUrl(options, endpoint), {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(this.errorHandler)
+            .then((res) => {
+                const headerValue = res.headers.get("X-Total-Count");
+                console.log('Значение заголовка:', headerValue);
+                return res;
+            })
+            .then((res) => res.json()
+                .then((data) => callback({
+                    rows: data,
+                    totalCount: + res.headers.get("X-Total-Count")
+                })))
             .catch((err) => console.error(err));
     }
 }

@@ -8,7 +8,7 @@ export function winners(): HTMLElement {
     const winnersBlock = document.createElement('div');
     const headerWinners = document.createElement('div');
     winnersBlock.appendChild(headerWinners);
-    headerWinners.innerText = `Winners ()`;
+
 
     const mainWinners = document.createElement('table')
     mainWinners.classList.add('winners-table');
@@ -51,7 +51,8 @@ export function winners(): HTMLElement {
         sort: "wins",
         order: "ASC"
     }, wins => {
-        wins.forEach((v, i) => {
+        headerWinners.innerText = `Winners (${wins.totalCount})`;
+        wins.rows.forEach((v, i) => {
             const trWinnerItem = document.createElement('tr');
             mainWinners.appendChild(trWinnerItem);
             garageApi.getCar(v.id, car => {

@@ -28,3 +28,8 @@ export type Winner = {
     "time": number
 }
 
+export type TableResponse<T> = {
+    totalCount: number,
+    rows: Array<T>;
+}
+
