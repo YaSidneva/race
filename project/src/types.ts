@@ -35,7 +35,7 @@ export type PageResponse<T> = {
 
 export type EngineParametres = {
     id: number,
-    status: "started" | "stopped"
+    status: "started" | "stopped" | "drive"
 }
 
 export type EngineResponse = {

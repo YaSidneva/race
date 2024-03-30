@@ -13,6 +13,20 @@ class EngineApi {
         this.request('PATCH', 'engine', callback, { "id": options.id, "status": options.status });
     }
 
+    changeCarEngine(options: EngineParametres, callback: ICallback<Response>) {
+        fetch(this.makeUrl({
+            "id": '' + options.id,
+            "status": options.status
+        }, 'engine'), {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then((data) => callback(data))
+            .catch((err) => console.error(err))
+    }
+
     errorHandler(res: Response) {
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)

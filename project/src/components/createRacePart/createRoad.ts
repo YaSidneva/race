@@ -6,8 +6,9 @@ import { Car } from "../../types";
 export function createRoad(carColor: string, car: Car): HTMLElement {
     const roadPart = document.createElement('div');
     roadPart.classList.add('road-part');
-    roadPart.appendChild(createStartStopBtn(car.id));
-    roadPart.appendChild(createCar(carColor)).classList.add('car');
+    const carElement = createCar(car.color);
+    roadPart.appendChild(createStartStopBtn(car.id, roadPart, carElement));
+    roadPart.appendChild(carElement).classList.add('car');
     const flagImg = document.createElement('div');
     flagImg.classList.add('flag');
     roadPart.appendChild(flagImg);
