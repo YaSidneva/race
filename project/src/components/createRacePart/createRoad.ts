@@ -1,11 +1,12 @@
 import "./style.css";
 import { createCar } from "../createRacePart/createCar";
 import { createStartStopBtn } from "../createRacePart/createStartStopBtn";
+import { Car } from "../../types";
 
-export function createRoad(carColor: string): HTMLElement {
+export function createRoad(carColor: string, car: Car): HTMLElement {
     const roadPart = document.createElement('div');
     roadPart.classList.add('road-part');
-    roadPart.appendChild(createStartStopBtn());
+    roadPart.appendChild(createStartStopBtn(car.id));
     roadPart.appendChild(createCar(carColor)).classList.add('car');
     const flagImg = document.createElement('div');
     flagImg.classList.add('flag');

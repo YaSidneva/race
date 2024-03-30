@@ -9,13 +9,16 @@ export function createRaceItem(car: Car, onRemove: ICallback<number>): HTMLEleme
     const carHeaderBtn = document.createElement('div');
     newItem.appendChild(carHeaderBtn);
     carHeaderBtn.classList.add('car-header');
-    carHeaderBtn.appendChild(createButton('select', e => {
+    const carHeaderBtnBlock = document.createElement('div');
+    carHeaderBtnBlock.classList.add('car-header-btn-block');
+    carHeaderBtn.appendChild(carHeaderBtnBlock);
+    carHeaderBtnBlock.appendChild(createButton('select', e => {
         const updTextfield = document.querySelector('.upd-container').querySelector('.textfield') as HTMLInputElement;
         updTextfield.value = car.name;
         const updColorPicker = document.querySelector('.upd-container').querySelector('.color-picker') as HTMLInputElement;
         updColorPicker.value = car.color;
     })).classList.add('car-header-btn');
-    carHeaderBtn.appendChild(createButton('remove', e => {
+    carHeaderBtnBlock.appendChild(createButton('remove', e => {
         onRemove(car.id);
     })).classList.add('car-header-btn');
 
@@ -23,6 +26,6 @@ export function createRaceItem(car: Car, onRemove: ICallback<number>): HTMLEleme
     titleCar.textContent = car.name;
     titleCar.classList.add('title-car');
     carHeaderBtn.appendChild(titleCar);
-    const road = newItem.appendChild(createRoad(car.color));
+    const road = newItem.appendChild(createRoad(car.color, car));
     return newItem;
 }

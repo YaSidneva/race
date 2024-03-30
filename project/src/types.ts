@@ -33,3 +33,12 @@ export type PageResponse<T> = {
     rows: Array<T>;
 }
 
+export type EngineParametres = {
+    id: number,
+    status: "started" | "stopped"
+}
+
+export type EngineResponse = {
+    velocity: number,
+    distance: number
+}
