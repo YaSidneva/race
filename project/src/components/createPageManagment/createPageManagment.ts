@@ -34,13 +34,14 @@ class PageManagment {
             this.page -= 1;
             if (this.page === 1) {
                 prevBtn.disabled = true;
-
             };
+            if (this.page + 1 < (this.totalCount + this.limit) / this.limit) {
+                nextBtn.disabled = false;
+            }
             this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
         })) as HTMLButtonElement;
         if (this.page === 1) {
             prevBtn.disabled = true;
-
         };
         prevBtn.className = 'page-btn next-page-btn';
 
@@ -49,11 +50,16 @@ class PageManagment {
             // TODO: mute next button if we are on the last page
             if (this.page != 1) {
                 prevBtn.disabled = false;
-
             };
+            if (this.page + 1 >= (this.totalCount + this.limit) / this.limit) {
+                nextBtn.disabled = true;
+            }
             this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
         })) as HTMLButtonElement;
         nextBtn.className = 'page-btn prev-page-btn';
+        if (this.page + 1 >= (this.totalCount + this.limit) / this.limit) {
+            nextBtn.disabled = true;
+        }
 
     }
 
