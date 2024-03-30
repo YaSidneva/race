@@ -5,8 +5,16 @@ import GarageApi from "../../api/garageApi";
 export function createBtnContainer(): HTMLElement {
     const btnContainer = document.createElement('div');
     btnContainer.classList.add('btn-block');
-    const racebtn = createButton('race');
-    const resetbtn = createButton('reset');
+    const racebtn = createButton('race', e => {
+        (document.querySelectorAll('.drive-button-start')).forEach(
+            startButton => (startButton as HTMLButtonElement).click()
+        )
+    });
+    const resetbtn = createButton('reset', e => {
+        (document.querySelectorAll('.drive-button-stop')).forEach(
+            startButton => (startButton as HTMLButtonElement).click()
+        )
+    });
     const garageApi = new GarageApi(process.env.API_URL!, {});
     const generate = createButton('generate cars', e => {
         for (let i = 1; i <= 100; i++) {
