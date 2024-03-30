@@ -1,4 +1,4 @@
-import { Car, EndpointConfiguration, GetWinnersOptions, Winner, ICallback, OptionsType, TableResponse } from "../types";
+import { Car, EndpointConfiguration, GetWinnersOptions, Winner, ICallback, OptionsType, PageResponse } from "../types";
 
 class WinnersApi {
     private baseLink: string;
@@ -9,7 +9,7 @@ class WinnersApi {
         this.options = options;
     }
 
-    getWinners(options: GetWinnersOptions, callback: ICallback<TableResponse<Winner>>) {
+    getWinners(options: GetWinnersOptions, callback: ICallback<PageResponse<Winner>>) {
         this.requestTable('GET', 'winners', callback, { "_page": options.page, "_limit": options.limit, "_sort": options.sort, "_order": options.order });
     }
 
@@ -44,17 +44,12 @@ class WinnersApi {
             }
         })
             .then(this.errorHandler)
-            .then((res) => {
-                const headerValue = res.headers.get("X-Total-Count");
-                console.log('Значение заголовка:', headerValue);
-                return res;
-            })
             .then((res) => res.json())
             .then((data) => callback(data))
             .catch((err) => console.error(err));
     }
 
-    requestTable(method: string, endpoint: string, callback: ICallback<TableResponse<Winner>>,
+    requestTable(method: string, endpoint: string, callback: ICallback<PageResponse<Winner>>,
         options = {},) {
         fetch(this.makeUrl(options, endpoint), {
             method: method,
@@ -63,11 +58,6 @@ class WinnersApi {
             }
         })
             .then(this.errorHandler)
-            .then((res) => {
-                const headerValue = res.headers.get("X-Total-Count");
-                console.log('Значение заголовка:', headerValue);
-                return res;
-            })
             .then((res) => res.json()
                 .then((data) => callback({
                     rows: data,

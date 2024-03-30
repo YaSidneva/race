@@ -1,4 +1,4 @@
-import { Car, EndpointConfiguration, ICallback, OptionsType } from "../types";
+import { Car, EndpointConfiguration, ICallback, OptionsType, PageResponse } from "../types";
 
 class GarageApi {
     private baseLink: string;
@@ -13,8 +13,8 @@ class GarageApi {
         this.request('POST', 'garage', callback, undefined, car);
     }
 
-    getCars(page: number, limit: number, callback: ICallback<Array<Car>>) {
-        this.request('GET', 'garage', callback, { "_page": page, "_limit": limit }, undefined);
+    getCars(page: number, limit: number, callback: ICallback<PageResponse<Car>>) {
+        this.requestPage('GET', 'garage', callback, { "_page": page, "_limit": limit });
     }
 
     getCar(id: number, callback: ICallback<Car>) {
@@ -58,6 +58,23 @@ class GarageApi {
             .then(this.errorHandler)
             .then((res) => res.json())
             .then((data) => callback(data))
+            .catch((err) => console.error(err));
+    }
+
+    requestPage(method: string, endpoint: string, callback: ICallback<PageResponse<Car>>,
+        options = {},) {
+        fetch(this.makeUrl(options, endpoint), {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(this.errorHandler)
+            .then((res) => res.json()
+                .then((data) => callback({
+                    rows: data,
+                    totalCount: + res.headers.get("X-Total-Count")
+                })))
             .catch((err) => console.error(err));
     }
 }

@@ -1,18 +1,20 @@
+import GarageApi from "../../api/garageApi";
 import { createButton } from "../createButtons/createBtn";
-import Garage from "../garage/garage";
+import { createRace } from "../createRacePart/createRace";
 import "./style.css";
 
 class PageManagment {
-    private garage: Garage;
     private page: number;
     private limit: number;
     private pageManagmentContainer: HTMLElement;
+    private garageApi: GarageApi;
+    private totalCount: number;
 
     constructor(pageManagmentContainer: HTMLElement) {
-        this.garage = new Garage(this);
         this.page = 1;
         this.limit = 7;
         this.pageManagmentContainer = pageManagmentContainer;
+        this.garageApi = new GarageApi(process.env.API_URL!, {});
     }
 
     renderPageContainer() {
@@ -20,13 +22,9 @@ class PageManagment {
         const raceContainer = document.createElement('div');
         raceContainer.classList.add('race-container');
         const hearedRace = document.createElement('div');
-        hearedRace.textContent = `Garage ()`;
-        const page = document.createElement('div');
-        page.textContent = `page ${this.page}`;
-        hearedRace.appendChild(page);
         this.pageManagmentContainer.appendChild(hearedRace);
         this.pageManagmentContainer.appendChild(raceContainer);
-        this.garage.renderGarage(this.page, this.limit, raceContainer);
+        this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
 
         this.pageManagmentContainer.classList.add('page-manager-container');
         const pageManagerBlock = document.createElement('div');
@@ -34,12 +32,11 @@ class PageManagment {
         this.pageManagmentContainer.appendChild(pageManagerBlock);
         const prevBtn = pageManagerBlock.appendChild(createButton('prev', e => {
             this.page -= 1;
-            page.textContent = `page ${this.page}`;
             if (this.page === 1) {
                 prevBtn.disabled = true;
 
             };
-            this.garage.renderGarage(this.page, this.limit, raceContainer);
+            this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
         })) as HTMLButtonElement;
         if (this.page === 1) {
             prevBtn.disabled = true;
@@ -49,16 +46,32 @@ class PageManagment {
 
         const nextBtn = pageManagerBlock.appendChild(createButton('next', e => {
             this.page += 1;
-            page.textContent = `page ${this.page}`;
             // TODO: mute next button if we are on the last page
             if (this.page != 1) {
                 prevBtn.disabled = false;
 
             };
-            this.garage.renderGarage(this.page, this.limit, raceContainer);
+            this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
         })) as HTMLButtonElement;
         nextBtn.className = 'page-btn prev-page-btn';
 
+    }
+
+    renderGarage(page: number, limit: number, raceContainer: HTMLElement, hearedRace: HTMLDivElement) {
+        raceContainer.innerHTML = '';
+        this.garageApi.getCars(page, limit, c => {
+            this.totalCount = c.totalCount;
+            hearedRace.innerHTML = '';
+            hearedRace.textContent = `Garage (${this.totalCount})`;
+
+            const page = document.createElement('div');
+            page.textContent = `page ${this.page}`;
+            hearedRace.appendChild(page);
+
+            const race = raceContainer.appendChild(createRace(c, carId => {
+                this.garageApi.removeCar(carId, c => { this.renderPageContainer() });
+            }));
+        });
     }
 }
 
