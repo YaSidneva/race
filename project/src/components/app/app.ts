@@ -1,4 +1,4 @@
-import { manageCar } from '../createAddPart/createAddCar';
+import { createCar, updateCar } from '../createAddPart/createAddCar';
 import { createButton } from '../createButtons/createBtn';
 import { createBtnContainer } from '../createAddPart/createBtnPart';
 import GarageApi from '../../api/garageApi';
@@ -35,7 +35,7 @@ class App {
     const addCarBlock = document.createElement('div');
     addCarBlock.classList.add('car-container');
     editSaveContainer.appendChild(addCarBlock);
-    addCarBlock.appendChild(manageCar('Create car', (newCar) => {
+    addCarBlock.appendChild(createCar('Create car', (newCar) => {
       this.garageApi.createCar(
         newCar,
         () => {
@@ -43,9 +43,8 @@ class App {
         },
       );
     }));
-    const updCar = addCarBlock.appendChild(manageCar('Update car', () => {
-    }));
-    updCar.classList.add('upd-container');
+
+    addCarBlock.appendChild(updateCar('Update car'));
     editSaveContainer.appendChild(createBtnContainer());
 
     mainContainer.appendChild(pageManagmentContainer);

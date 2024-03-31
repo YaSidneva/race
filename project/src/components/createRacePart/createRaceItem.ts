@@ -3,7 +3,8 @@ import { createButton } from '../createButtons/createBtn';
 import { createRoad } from './createRoad';
 import './style.css';
 
-export function createRaceItem(car: Car, onRemove: ICallback<number>): HTMLElement {
+export function createRaceItem(car: Car, onRemove: ICallback<number>, onSelect: ICallback<Car>)
+  : HTMLElement {
   const newItem = document.createElement('div');
   newItem.classList.add('item-car');
   const carHeaderBtn = document.createElement('div');
@@ -13,10 +14,19 @@ export function createRaceItem(car: Car, onRemove: ICallback<number>): HTMLEleme
   carHeaderBtnBlock.classList.add('car-header-btn-block');
   carHeaderBtn.appendChild(carHeaderBtnBlock);
   carHeaderBtnBlock.appendChild(createButton('select', () => {
-    const updTextfield = document.querySelector('.upd-container').querySelector('.textfield') as HTMLInputElement;
+    const updTextfield = document.querySelector('.update-car-block').querySelector('.textfield') as HTMLInputElement;
     updTextfield.value = car.name;
-    const updColorPicker = document.querySelector('.upd-container').querySelector('.color-picker') as HTMLInputElement;
+    const updColorPicker = document.querySelector('.update-car-block').querySelector('.color-picker') as HTMLInputElement;
     updColorPicker.value = car.color;
+    const updUpdateBtn = document.querySelector('.update-car-block').querySelector('.button') as HTMLButtonElement;
+    updUpdateBtn.onclick = () => {
+      const updatedCar: Car = {
+        id: car.id,
+        name: updTextfield.value,
+        color: updColorPicker.value,
+      };
+      onSelect(updatedCar);
+    };
   })).classList.add('car-header-btn');
   carHeaderBtnBlock.appendChild(createButton('remove', () => {
     onRemove(car.id);

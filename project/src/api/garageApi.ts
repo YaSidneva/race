@@ -16,16 +16,20 @@ class GarageApi {
     this.request('POST', 'garage', callback, undefined, car);
   }
 
+  updateCar(car: Car, id: number, callback: ICallback<Car>) {
+    this.request('PUT', `garage/${id}`, callback, {}, car);
+  }
+
   getCars(page: number, limit: number, callback: ICallback<PageResponse<Car>>) {
     this.requestPage('GET', 'garage', callback, { _page: page, _limit: limit });
   }
 
   getCar(id: number, callback: ICallback<Car>) {
-    this.request('GET', `garage/${id}`, callback, {}, undefined);
+    this.request('GET', `garage/${id}`, callback);
   }
 
   removeCar(id: number, callback: ICallback<Array<Car>>) {
-    this.request('DELETE', `garage/${id}`, callback, {}, undefined);
+    this.request('DELETE', `garage/${id}`, callback);
   }
 
   // eslint-disable-next-line class-methods-use-this

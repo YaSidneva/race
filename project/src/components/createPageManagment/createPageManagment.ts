@@ -84,9 +84,15 @@ class PageManagment {
       pageElement.textContent = `page ${this.page}`;
       hearedRace.appendChild(pageElement);
 
-      raceContainer.appendChild(createRace(c, (carId) => {
-        this.garageApi.removeCar(carId, () => { this.renderPageContainer(); });
-      }));
+      raceContainer.appendChild(createRace(
+        c,
+        (carId) => {
+          this.garageApi.removeCar(carId, () => { this.renderPageContainer(); });
+        },
+        (updatedCar) => {
+          this.garageApi.updateCar(updatedCar, updatedCar.id, () => this.renderPageContainer());
+        },
+      ));
     });
   }
 }
