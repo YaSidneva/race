@@ -9,7 +9,7 @@ class PageManagment {
 
   private limit: number;
 
-  private pageManagmentContainer: HTMLElement;
+  public pageManagmentContainer: HTMLElement;
 
   private garageApi: GarageApi;
 
@@ -22,7 +22,7 @@ class PageManagment {
     this.garageApi = new GarageApi(process.env.API_URL!, {});
   }
 
-  renderPageContainer() {
+  renderPageContainer(): HTMLElement {
     this.pageManagmentContainer.innerHTML = '';
     const raceContainer = document.createElement('div');
     raceContainer.classList.add('race-container');
@@ -66,6 +66,7 @@ class PageManagment {
     if (this.page + 1 >= (this.totalCount + this.limit) / this.limit) {
       nextBtn.disabled = true;
     }
+    return this.pageManagmentContainer;
   }
 
   renderGarage(
@@ -77,6 +78,7 @@ class PageManagment {
     raceContainer.innerHTML = '';
     this.garageApi.getCars(page, limit, (c) => {
       this.totalCount = c.totalCount;
+      hearedRace.classList.add('header-race');
       hearedRace.innerHTML = '';
       hearedRace.textContent = `Garage (${this.totalCount})`;
 

@@ -1,15 +1,15 @@
 .main-container {
     width: 100%;
-    height: 100vh;
 }
 
 .update-container {
     min-width: fit-content;
     width: 70%;
-    height: 250px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 45px;
 }
 
 .header-btn-block {
