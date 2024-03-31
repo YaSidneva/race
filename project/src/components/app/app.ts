@@ -45,7 +45,7 @@ class App {
     }));
 
     addCarBlock.appendChild(updateCar('Update car'));
-    editSaveContainer.appendChild(createBtnContainer());
+    editSaveContainer.appendChild(createBtnContainer(this.pageManager));
 
     mainContainer.appendChild(pageManagmentContainer);
     this.pageManager.renderPageContainer();

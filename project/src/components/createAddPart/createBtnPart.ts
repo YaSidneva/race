@@ -1,8 +1,9 @@
 import { createButton } from '../createButtons/createBtn';
 import { carNames } from '../../const/carNames';
 import GarageApi from '../../api/garageApi';
+import PageManagment from '../createPageManagment/createPageManagment';
 
-export function createBtnContainer(): HTMLElement {
+export function createBtnContainer(pagemanagment: PageManagment): HTMLElement {
   const btnContainer = document.createElement('div');
   btnContainer.classList.add('btn-block');
   const racebtn = createButton('race', () => {
@@ -27,9 +28,9 @@ export function createBtnContainer(): HTMLElement {
         color: randomColor,
         name: randomName,
       }, () => {
-
       });
     }
+    pagemanagment.renderPageContainer();
   });
   btnContainer.appendChild(racebtn);
   btnContainer.appendChild(resetbtn);
