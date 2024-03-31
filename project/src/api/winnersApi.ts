@@ -18,6 +18,10 @@ class WinnersApi {
     });
   }
 
+  createWinner(winner: Winner, callback: ICallback<PageResponse<Winner>>) {
+    this.request('POST', 'winners', callback, {}, winner);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   errorHandler(res: Response) {
     if (!res.ok) {

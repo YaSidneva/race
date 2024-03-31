@@ -1,10 +1,10 @@
 import { Car, ICallback } from '../../types';
 import { createButton } from '../createButtons/createBtn';
-import { createRoad } from './createRoad';
+import CarElement from './createRoad';
 import './style.css';
 
 export function createRaceItem(car: Car, onRemove: ICallback<number>, onSelect: ICallback<Car>)
-  : HTMLElement {
+  : [HTMLElement, CarElement] {
   const newItem = document.createElement('div');
   newItem.classList.add('item-car');
   const carHeaderBtn = document.createElement('div');
@@ -36,6 +36,7 @@ export function createRaceItem(car: Car, onRemove: ICallback<number>, onSelect: 
   titleCar.textContent = car.name;
   titleCar.classList.add('title-car');
   carHeaderBtn.appendChild(titleCar);
-  newItem.appendChild(createRoad(car.color, car));
-  return newItem;
+  const carElement = new CarElement(car);
+  newItem.appendChild(carElement.createRoad());
+  return [newItem, carElement];
 }

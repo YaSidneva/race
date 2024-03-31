@@ -42,3 +42,8 @@ export type EngineResponse = {
   velocity: number,
   distance: number
 };
+
+export type RaceResult = {
+  car: Car,
+  time: number
+};

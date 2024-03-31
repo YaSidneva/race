@@ -5,13 +5,21 @@ import PageManagment from '../createPageManagment/createPageManagment';
 
 export function createBtnContainer(pagemanagment: PageManagment): HTMLElement {
   const btnContainer = document.createElement('div');
+  const winnerRes = document.createElement('div');
+  winnerRes.classList.add('winner-res');
+  winnerRes.style.display = 'none';
+  console.log(winnerRes);
+
   btnContainer.classList.add('btn-block');
   const racebtn = createButton('race', () => {
-    (document.querySelectorAll('.drive-button-start')).forEach(
-      (startButton) => (startButton as HTMLButtonElement).click(),
-    );
+    pagemanagment.startRace()
+      .then((winner): void => {
+        winnerRes.style.display = 'block';
+        winnerRes.textContent = `${winner.car.name} went first [${(winner.time / 1000).toFixed(2)}s]!`;
+      });
   });
   const resetbtn = createButton('reset', () => {
+    winnerRes.style.display = 'none';
     (document.querySelectorAll('.drive-button-stop')).forEach(
       (startButton) => (startButton as HTMLButtonElement).click(),
     );
@@ -35,5 +43,6 @@ export function createBtnContainer(pagemanagment: PageManagment): HTMLElement {
   btnContainer.appendChild(racebtn);
   btnContainer.appendChild(resetbtn);
   btnContainer.appendChild(generate);
+  btnContainer.appendChild(winnerRes);
   return btnContainer;
 }

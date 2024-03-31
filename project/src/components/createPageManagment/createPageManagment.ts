@@ -1,7 +1,10 @@
 /* eslint-disable no-param-reassign */
 import GarageApi from '../../api/garageApi';
+import WinnersApi from '../../api/winnersApi';
+import { RaceResult, Winner } from '../../types';
 import { createButton } from '../createButtons/createBtn';
 import { createRace } from '../createRacePart/createRace';
+import CarElement from '../createRacePart/createRoad';
 import './style.css';
 
 class PageManagment {
@@ -15,11 +18,35 @@ class PageManagment {
 
   private totalCount: number;
 
+  private carElements: Array<CarElement>;
+
+  private winnerApi: WinnersApi;
+
+  private winnerRes: Winner;
+
   constructor(pageManagmentContainer: HTMLElement) {
     this.page = 1;
     this.limit = 7;
     this.pageManagmentContainer = pageManagmentContainer;
     this.garageApi = new GarageApi(process.env.API_URL!, {});
+    this.winnerApi = new WinnersApi(process.env.API_URL!, {});
+  }
+
+  startRace(): Promise<RaceResult> {
+    return Promise.all(this.carElements
+      .map((carElement) => carElement.startDriving()
+        .then((r): RaceResult => ({
+          car: carElement.car,
+          time: r,
+        }
+        ))))
+      .then((results) => results.reduce((minObject, currentObject) => (
+        currentObject.time < minObject.time ? currentObject : minObject), results[0]));
+    // .then((winner) => {
+    //   this.winnerApi.createWinner(winner, () => {
+
+    //   });
+    // });
   }
 
   renderPageContainer(): HTMLElement {
@@ -86,7 +113,7 @@ class PageManagment {
       pageElement.textContent = `page ${this.page}`;
       hearedRace.appendChild(pageElement);
 
-      raceContainer.appendChild(createRace(
+      const [raceElement, carElements] = createRace(
         c,
         (carId) => {
           this.garageApi.removeCar(carId, () => { this.renderPageContainer(); });
@@ -94,7 +121,11 @@ class PageManagment {
         (updatedCar) => {
           this.garageApi.updateCar(updatedCar, updatedCar.id, () => this.renderPageContainer());
         },
-      ));
+      );
+
+      this.carElements = carElements;
+
+      raceContainer.appendChild(raceElement);
     });
   }
 }
