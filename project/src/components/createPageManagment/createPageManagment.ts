@@ -65,6 +65,7 @@ class PageManagment {
     this.pageManagmentContainer.appendChild(pageManagerBlock);
     const prevBtn = pageManagerBlock.appendChild(createButton('prev', () => {
       this.page -= 1;
+      this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
       if (this.page === 1) {
         prevBtn.disabled = true;
       }
@@ -72,7 +73,6 @@ class PageManagment {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         nextBtn.disabled = false;
       }
-      this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
     })) as HTMLButtonElement;
     if (this.page === 1) {
       prevBtn.disabled = true;
@@ -81,19 +81,16 @@ class PageManagment {
 
     const nextBtn = pageManagerBlock.appendChild(createButton('next', () => {
       this.page += 1;
-      // TODO: mute next button if we are on the last page
+      this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
       if (this.page !== 1) {
         prevBtn.disabled = false;
       }
       if (this.page + 1 >= (this.totalCount + this.limit) / this.limit) {
         nextBtn.disabled = true;
       }
-      this.renderGarage(this.page, this.limit, raceContainer, hearedRace);
     })) as HTMLButtonElement;
     nextBtn.className = 'page-btn prev-page-btn';
-    if (this.page + 1 >= (this.totalCount + this.limit) / this.limit) {
-      nextBtn.disabled = true;
-    }
+
     return this.pageManagmentContainer;
   }
 
