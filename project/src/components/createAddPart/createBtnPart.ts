@@ -8,7 +8,6 @@ export function createBtnContainer(pagemanagment: PageManagment): HTMLElement {
   const winnerRes = document.createElement('div');
   winnerRes.classList.add('winner-res');
   winnerRes.style.display = 'none';
-  console.log(winnerRes);
 
   btnContainer.classList.add('btn-block');
   const racebtn = createButton('race', () => {

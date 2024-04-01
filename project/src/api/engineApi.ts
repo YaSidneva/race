@@ -54,7 +54,7 @@ class EngineApi {
   request(
     method: string,
     endpoint: string,
-    callback: ICallback<any>,
+    callback: ICallback<EngineResponse>,
     options = {},
   ) {
     fetch(this.makeUrl(options, endpoint), {

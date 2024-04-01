@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import GarageApi from '../../api/garageApi';
 import WinnersApi from '../../api/winnersApi';
-import { RaceResult } from '../../types';
+import { RaceResult, Winner } from '../../types';
 import { createButton } from '../createButtons/createBtn';
 import { createRace } from '../createRacePart/createRace';
 import CarElement from '../createRacePart/createRoad';
@@ -41,11 +41,25 @@ class PageManagment {
       .then((results) => results.reduce((minObject, currentObject) => (
         currentObject.time < minObject.time ? currentObject : minObject), results[0]))
       .then((winner) => {
-        this.winnerApi.createWinner({
-          id: winner.car.id,
-          time: (winner.time / 1000),
-          wins: 1,
-        }, () => { });
+        this.winnerApi.getWinner(winner.car.id, (response) => {
+          if (response.status === 404) {
+            this.winnerApi.createWinner({
+              id: winner.car.id,
+              time: (winner.time / 1000),
+              wins: 1,
+            }, () => { });
+          } else {
+            response.json()
+              .then((existedWinner: Winner) => {
+                this.winnerApi.updateWinner({
+                  id: existedWinner.id,
+                  wins: existedWinner.wins + 1,
+                  time: Math.min(existedWinner.time, (winner.time / 1000)),
+                }, () => { });
+              });
+          }
+        });
+
         return winner;
       });
   }

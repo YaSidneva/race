@@ -28,7 +28,7 @@ class GarageApi {
     this.request('GET', `garage/${id}`, callback);
   }
 
-  removeCar(id: number, callback: ICallback<Array<Car>>) {
+  removeCar(id: number, callback: ICallback<Car>) {
     this.request('DELETE', `garage/${id}`, callback);
   }
 
@@ -56,7 +56,7 @@ class GarageApi {
   request(
     method: string,
     endpoint: string,
-    callback: ICallback<any>,
+    callback: ICallback<Car>,
     options = {},
     body?: Car,
   ) {

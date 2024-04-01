@@ -18,8 +18,23 @@ class WinnersApi {
     });
   }
 
-  createWinner(winner: Winner, callback: ICallback<PageResponse<Winner>>) {
+  getWinner(winnerId: number, callback: ICallback<Response>) {
+    fetch(this.makeUrl({}, `winners/${winnerId}`), {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(callback)
+      .catch((err) => console.error(err));
+  }
+
+  createWinner(winner: Winner, callback: ICallback<Winner>) {
     this.request('POST', 'winners', callback, {}, winner);
+  }
+
+  updateWinner(winner: Winner, callback: ICallback<Winner>) {
+    this.request('PUT', `winners/${winner.id}`, callback, {}, winner);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -46,7 +61,7 @@ class WinnersApi {
   request(
     method: string,
     endpoint: string,
-    callback: ICallback<any>,
+    callback: ICallback<Winner>,
     options = {},
     body?: Winner,
   ) {
