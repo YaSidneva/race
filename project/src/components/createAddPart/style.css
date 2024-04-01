@@ -28,4 +28,19 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    color: #0a147e;
+    text-shadow: 0 -0.1rem 0.4rem white, 0 -0.2rem 1rem rgb(78, 150, 218), 0 -1rem 2rem rgb(23, 33, 128), 0 -1.8rem 4rem #0a147e;
+    animation: burn 1s infinite alternate-reverse;
+    border: 1px solid;
+    padding: 5px;
+}
+
+@keyframes burn {
+    from {
+        filter: brightness(150%) blur(1px);
+    }
+
+    to {
+        filter: brightness(100%) blur(0px);
+    }
 }

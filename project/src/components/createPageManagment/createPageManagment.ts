@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import GarageApi from '../../api/garageApi';
 import WinnersApi from '../../api/winnersApi';
-import { RaceResult, Winner } from '../../types';
+import { RaceResult } from '../../types';
 import { createButton } from '../createButtons/createBtn';
 import { createRace } from '../createRacePart/createRace';
 import CarElement from '../createRacePart/createRoad';
@@ -22,8 +22,6 @@ class PageManagment {
 
   private winnerApi: WinnersApi;
 
-  private winnerRes: Winner;
-
   constructor(pageManagmentContainer: HTMLElement) {
     this.page = 1;
     this.limit = 7;
@@ -41,12 +39,15 @@ class PageManagment {
         }
         ))))
       .then((results) => results.reduce((minObject, currentObject) => (
-        currentObject.time < minObject.time ? currentObject : minObject), results[0]));
-    // .then((winner) => {
-    //   this.winnerApi.createWinner(winner, () => {
-
-    //   });
-    // });
+        currentObject.time < minObject.time ? currentObject : minObject), results[0]))
+      .then((winner) => {
+        this.winnerApi.createWinner({
+          id: winner.car.id,
+          time: (winner.time / 1000),
+          wins: 1,
+        }, () => { });
+        return winner;
+      });
   }
 
   renderPageContainer(): HTMLElement {

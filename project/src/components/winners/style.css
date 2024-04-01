@@ -1,3 +1,12 @@
+.winners-block {
+    color: #0a147e;
+}
+
+.header-winners {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
 .winners-table {
     max-width: 450px;
     width: 100%;
@@ -9,4 +18,18 @@ td {
     border: 1px solid black;
     text-align: center;
 
+}
+
+.footer-winners-btns {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    min-width: 160px;
+    max-width: 220px;
+    width: 100%;
+}
+
+.footer-winner-button {
+    width: 6em;
+    height: 2em;
 }

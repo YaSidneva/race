@@ -6,7 +6,9 @@ import './style.css';
 
 export function winners(): HTMLElement {
   const winnersBlock = document.createElement('div');
+  winnersBlock.classList.add('winners-block');
   const headerWinners = document.createElement('div');
+  headerWinners.classList.add('header-winners');
   winnersBlock.appendChild(headerWinners);
 
   const mainWinners = document.createElement('table');
@@ -38,9 +40,10 @@ export function winners(): HTMLElement {
   winnersBlock.appendChild(mainWinners);
 
   const footerWinners = document.createElement('div');
+  footerWinners.classList.add('footer-winners-btns');
   winnersBlock.appendChild(footerWinners);
-  footerWinners.appendChild(createButton('prev'));
-  footerWinners.appendChild(createButton('next'));
+  footerWinners.appendChild(createButton('prev')).classList.add('footer-winner-button');
+  footerWinners.appendChild(createButton('next')).classList.add('footer-winner-button');
 
   const newWinnersApi = new WinnersApi(process.env.API_URL!, {});
   const garageApi = new GarageApi(process.env.API_URL!, {});
@@ -61,7 +64,7 @@ export function winners(): HTMLElement {
         tdCarItem.appendChild(createCar(car.color));
         const tdNameItem = createCellElement(car.name);
         const tdWinsItem = createCellElement(v.wins);
-        const tdTimeItem = createCellElement(v.time);
+        const tdTimeItem = createCellElement((v.time).toFixed(2));
         const tdItemArr = [tdNumberItem, tdCarItem, tdNameItem, tdWinsItem, tdTimeItem];
         function addItemElementToTd(el: HTMLTableCellElement) {
           trWinnerItem.appendChild(el);

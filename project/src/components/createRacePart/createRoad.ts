@@ -82,7 +82,7 @@ class CarElement {
         this.stopBtn.disabled = false;
 
         let position = 8;
-        const speed = engineResponse.velocity / 100;
+        const speed = engineResponse.velocity / 50;
         const interval = 5;
 
         function move() {
